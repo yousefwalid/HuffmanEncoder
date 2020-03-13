@@ -1,3 +1,4 @@
+#include "HuffmanDecoder.cpp"
 #include "FileManager.cpp"
 #include "HuffmanEncoder.cpp"
 #include <map>
@@ -17,7 +18,7 @@ public:
 	{
 	}
 
-	void run(const char *inputFile, const char *outputFile)
+	void run(const char *inputFile, const char *outputFile , const char *decodedFile)
 	{
 		// Get frequencies of characters from file
 
@@ -42,6 +43,16 @@ public:
 		// Calculate statistics
 
 		calculateStatisticsASCII(inputFile, outputFile);
+
+		// Read Encoded File
+		std::string encodedStr = fileMan.readEncodedFile(outputFile);
+
+		// Get Decoded String
+		HuffmanDecoder Decoder(codes, encodedStr);
+		std::string decodedStr = Decoder.getDecodedString();
+
+		// Output Decoded File
+		fileMan.decodeFile(decodedStr, decodedFile);
 	}
 
 	void calculateStatisticsASCII(const char *inputFile, const char *outputFile)

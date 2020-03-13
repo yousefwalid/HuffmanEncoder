@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <sstream>
 class FileManager
 {
 public:
@@ -49,5 +50,30 @@ public:
 
 		inpStream.close();
 		outStream.close();
+	}
+
+	void decodeFile(std::string decodedStr , const char *decodedFile)
+	{
+		std::ofstream file(decodedFile);
+		file << decodedStr;
+	}
+
+	std::string readEncodedFile(const char *encodedFile)
+	{
+		std::ifstream inpStream;
+		inpStream.open(encodedFile);
+
+		if (!encodedFile)
+		{
+			exit(1);
+		}
+
+		std::stringstream strStream;
+		strStream << inpStream.rdbuf();
+		std::string str = strStream.str(); 
+
+		inpStream.close();
+
+		return str;
 	}
 };

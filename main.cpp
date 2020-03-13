@@ -3,5 +3,5 @@
 int main()
 {
 	AppManager app;
-	app.run("file.in", "file.out");
+	app.run("file.in", "file.out" , "Decode.out");
 }
