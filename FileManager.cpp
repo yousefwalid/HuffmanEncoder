@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include "BitBuffer.cpp"
+using namespace std;
 
 class FileManager
 {
@@ -93,20 +94,26 @@ public:
 
 	std::string readEncodedFile(const char *encodedFile)
 	{
-		std::ifstream inpStream;
-		inpStream.open(encodedFile);
+		std::string str = "";
 
-		if (!encodedFile)
+		ifstream inpStream(encodedFile, ios::binary | ios::in);
+		char c;
+		while (inpStream.get(c))
 		{
-			exit(1);
+			for (int i = 7; i >= 0; i--)
+			{
+				if (((c >> i) & 1) == '\0')
+				{
+					str += '0';
+				}
+				else
+				{
+					str += '1';
+				}
+			}
 		}
 
-		std::stringstream strStream;
-		strStream << inpStream.rdbuf();
-		std::string str = strStream.str();
-
 		inpStream.close();
-
 		return str;
 	}
 };
