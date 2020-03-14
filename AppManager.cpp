@@ -18,11 +18,15 @@ public:
 	{
 	}
 
-	void run(const char *inputFile, const char *outputFile , const char *decodedFile)
+	void run(const char *inputFile, const char *outputFile, const char *decodedFile)
 	{
 		// Get frequencies of characters from file
 
 		std::map<char, int> frequency = fileMan.readASCIIFile(inputFile);
+
+		// Add null character '\0' to dictionary to identify end of file
+
+		frequency['\0']++;
 
 		// Get character codes
 
@@ -75,7 +79,7 @@ public:
 		inputStream.close();
 
 		std::cout << "Size before encoding: " << inpCharNum << " byte(s)\n"
-				  << "Size after encoding: ~" << outBitsNum / 8 + 1 << " byte(s)\n";
+							<< "Size after encoding: ~" << outBitsNum / 8 + 1 << " byte(s)\n";
 	}
 
 	~AppManager()

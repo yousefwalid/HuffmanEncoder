@@ -37,6 +37,7 @@ public:
 
 		// 1) Push all alphabet in priority queue
 
+		
 		std::priority_queue<HuffmanTree, std::vector<HuffmanTree>, PriorityQueueComparator> Nodes;
 
 		for (auto letter : frequency)
