@@ -28,9 +28,12 @@ public:
     uint8_t Byte = 0;
     for (int i = 0; i < 8; i++)
     {
-      bool bit = buffer.front() - '0';
-      buffer.pop();
-      Byte = Byte | (bit << (7 - i));
+      if (!buffer.empty())
+      {
+        bool bit = buffer.front() - '0';
+        buffer.pop();
+        Byte = Byte | (bit << (7 - i));
+      }
     }
     return Byte;
   }
