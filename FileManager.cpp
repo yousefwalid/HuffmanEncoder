@@ -73,7 +73,6 @@ public:
 			{
 				char outByte = bitBuff.pop();
 				outStream << outByte;
-				std::cout << (int)outByte << std::endl;
 			}
 		}
 

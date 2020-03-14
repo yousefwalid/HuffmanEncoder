@@ -72,14 +72,14 @@ public:
 		inputStream.close();
 
 		inputStream.open(outputFile);
-		int outBitsNum = 0;
+		int outBytesNum = 0;
 		while (inputStream >> dummy)
-			outBitsNum++;
+			outBytesNum++;
 
 		inputStream.close();
 
 		std::cout << "Size before encoding: " << inpCharNum << " byte(s)\n"
-							<< "Size after encoding: ~" << outBitsNum / 8 + 1 << " byte(s)\n";
+							<< "Size after encoding: ~" << outBytesNum << " byte(s)\n";
 	}
 
 	~AppManager()
