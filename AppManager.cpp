@@ -5,6 +5,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <stdio.h>
 
 using namespace std;
 
@@ -61,25 +62,20 @@ public:
 
 	void calculateStatisticsASCII(const char *inputFile, const char *outputFile)
 	{
-		std::ifstream inputStream;
-		char dummy;
+		FILE *file;
+		file = fopen(inputFile, "r");
+		fseek(file, 0, SEEK_END);
+		int inputSize = ftell(file);
+		fclose(file);
 
-		inputStream.open(inputFile);
-		int inpCharNum = 0;
-		while (inputStream >> dummy)
-			inpCharNum++;
+		file = fopen(outputFile, "r");
+		fseek(file, 0, SEEK_END);
+		int outputSize = ftell(file);
+		fclose(file);
 
-		inputStream.close();
-
-		inputStream.open(outputFile);
-		int outBytesNum = 0;
-		while (inputStream >> dummy)
-			outBytesNum++;
-
-		inputStream.close();
-
-		std::cout << "Size before encoding: " << inpCharNum << " byte(s)\n"
-							<< "Size after encoding: ~" << outBytesNum << " byte(s)\n";
+		std::cout << "Size before encoding: " << inputSize << " byte(s)\n"
+				  << "Size after encoding: " << outputSize << " byte(s)\n"
+				  << "Compression ratio = " << (double)(inputSize) / (double)(outputSize);
 	}
 
 	~AppManager()
