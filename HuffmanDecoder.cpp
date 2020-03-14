@@ -5,6 +5,7 @@ class HuffmanDecoder
 {
 private:
 	std::string decodedStr = "";
+
 public:
 	HuffmanDecoder(std::map<char, std::string> codeDic, std::string encodedStr)
 	{
@@ -24,7 +25,7 @@ public:
 			keySearch += encodedStr[i];
 			decodedLtr = codeDicInv[keySearch];
 
-			if (decodedLtr[0] != '\0')
+			if (decodedLtr[0] != 0)
 			{
 				decodedStr.append(decodedLtr);
 				keySearch = "";
@@ -36,5 +37,4 @@ public:
 	{
 		return decodedStr;
 	}
-
 };

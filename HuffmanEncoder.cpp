@@ -17,7 +17,7 @@ private:
 		if (node->right != nullptr)
 			recurseHuffmanCode(node->right, code + "0");
 
-		if (node->symbol != '\0')
+		if (node->symbol != 0)
 			codes[node->symbol] = code;
 
 		return;
@@ -60,7 +60,7 @@ public:
 			*node2 = Nodes.top();
 			Nodes.pop();
 
-			HuffmanTree newNode('\0', (*node1).frequency + (*node2).frequency);
+			HuffmanTree newNode(0, (*node1).frequency + (*node2).frequency);
 			newNode.left = node1;
 			newNode.right = node2;
 			Nodes.push(newNode);

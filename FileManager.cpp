@@ -16,11 +16,21 @@ public:
 			exit(1);
 		}
 
-		char c;
+		std::string line;
 		std::map<char, int> frequency;
 
-		while (inpStream >> c)
-			frequency[c]++;
+		bool firstLine = 1;
+
+		while (std::getline(inpStream, line))
+		{
+			if (firstLine)
+				firstLine = 0;
+			else
+				frequency['\n']++;
+
+			for (auto c : line)
+				frequency[c]++;
+		}
 
 		inpStream.close();
 
@@ -44,15 +54,24 @@ public:
 		if (!outStream)
 			exit(1);
 
-		char c;
-		while (inpStream >> c)
-			outStream << codes[c];
+		std::string line;
+		bool firstLine = 1;
+		while (std::getline(inpStream, line))
+		{
+			if (firstLine)
+				firstLine = 0;
+			else
+				outStream << codes['\n'];
+
+			for (auto c : line)
+				outStream << codes[c];
+		}
 
 		inpStream.close();
 		outStream.close();
 	}
 
-	void decodeFile(std::string decodedStr , const char *decodedFile)
+	void decodeFile(std::string decodedStr, const char *decodedFile)
 	{
 		std::ofstream file(decodedFile);
 		file << decodedStr;
@@ -70,7 +89,7 @@ public:
 
 		std::stringstream strStream;
 		strStream << inpStream.rdbuf();
-		std::string str = strStream.str(); 
+		std::string str = strStream.str();
 
 		inpStream.close();
 
