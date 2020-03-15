@@ -27,7 +27,7 @@ public:
 
 		// Add null character EOT to dictionary to identify end of file
 
-		frequency[3]++; // Enter EOT character
+		frequency[6]++; // Enter EOT character
 
 		// Get character codes
 
@@ -74,8 +74,8 @@ public:
 		fclose(file);
 
 		std::cout << "Size before encoding: " << inputSize << " byte(s)\n"
-				  << "Size after encoding: " << outputSize << " byte(s)\n"
-				  << "Compression ratio = " << (double)(inputSize) / (double)(outputSize) << '\n';
+							<< "Size after encoding: " << outputSize << " byte(s)\n"
+							<< "Compression ratio = " << (double)(inputSize) / (double)(outputSize) << '\n';
 	}
 
 	~AppManager()

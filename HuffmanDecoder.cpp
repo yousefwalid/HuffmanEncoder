@@ -26,7 +26,7 @@ public:
 
 			if (codeDicInv.count(keySearch))
 			{
-				if (codeDicInv[keySearch] == 3)
+				if (codeDicInv[keySearch] == 6)
 					break;
 				decodedStr += codeDicInv[keySearch];
 				keySearch = "";

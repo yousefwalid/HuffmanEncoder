@@ -67,7 +67,7 @@ public:
 			}
 		}
 
-		bitBuff.push(codes[3]);
+		bitBuff.push(codes[6]);
 
 		if (bitBuff.hasByte()) // if it contains more than 1 byte, pop twice
 			outStream << bitBuff.pop();
