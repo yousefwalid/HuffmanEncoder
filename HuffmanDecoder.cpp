@@ -1,6 +1,6 @@
 #include <map>
 #include <string>
-
+#include <iostream>
 class HuffmanDecoder
 {
 private:
@@ -18,18 +18,18 @@ public:
 
 		// 2) Search for the value and add it or the decoded string
 
-		std::string decodedLtr = "";
+		char decodedLtr = 0;
 		std::string keySearch = "";
 		for (int i = 0; i < encodedStr.size(); i++)
 		{
 			keySearch += encodedStr[i];
-			decodedLtr = codeDicInv[keySearch];
 
-			if (decodedLtr[0] != 0)
+			if (codeDicInv.count(keySearch))
 			{
-				decodedStr.append(decodedLtr);
+				if (codeDicInv[keySearch] == 3)
+					break;
+				decodedStr += codeDicInv[keySearch];
 				keySearch = "";
-				decodedLtr = "";
 			}
 		}
 	}

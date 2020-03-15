@@ -25,9 +25,9 @@ public:
 
 		std::map<char, int> frequency = fileMan.readASCIIFile(inputFile);
 
-		// Add null character '\0' to dictionary to identify end of file
+		// Add null character EOT to dictionary to identify end of file
 
-		frequency['\0']++;
+		frequency[3]++; // Enter EOT character
 
 		// Get character codes
 
@@ -75,7 +75,7 @@ public:
 
 		std::cout << "Size before encoding: " << inputSize << " byte(s)\n"
 				  << "Size after encoding: " << outputSize << " byte(s)\n"
-				  << "Compression ratio = " << (double)(inputSize) / (double)(outputSize);
+				  << "Compression ratio = " << (double)(inputSize) / (double)(outputSize) << '\n';
 	}
 
 	~AppManager()

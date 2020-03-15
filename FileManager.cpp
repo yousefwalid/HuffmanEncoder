@@ -77,7 +77,7 @@ public:
 			}
 		}
 
-		bitBuff.push(codes['\0']);
+		bitBuff.push(codes[3]);
 		if (bitBuff.hasByte()) // if it contains more than 1 byte, pop twice
 			outStream << bitBuff.pop();
 		outStream << bitBuff.pop(); // if it contains less than a byte, pop once
@@ -102,7 +102,7 @@ public:
 		{
 			for (int i = 7; i >= 0; i--)
 			{
-				if (((c >> i) & 1) == '\0')
+				if (!((c >> i) & 1))
 				{
 					str += '0';
 				}
