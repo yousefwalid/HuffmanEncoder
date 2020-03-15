@@ -47,28 +47,18 @@ public:
 	{
 		BitBuffer bitBuff;
 
-		std::ifstream inpStream;
-		inpStream.open(inputFile);
+		std::ifstream inpStream(inputFile);
 		if (!inpStream)
 			exit(1);
 
-		std::ofstream outStream;
-		outStream.open(outputFile);
+		std::ofstream outStream(outputFile);
 		if (!outStream)
 			exit(1);
 
-		std::string line;
-		bool firstLine = 1;
-
-		while (std::getline(inpStream, line))
+		char c;
+		while (inpStream.get(c))
 		{
-			if (firstLine)
-				firstLine = 0;
-			else
-				bitBuff.push(codes['\n']);
-
-			for (auto c : line)
-				bitBuff.push(codes[c]);
+			bitBuff.push(codes[c]);
 
 			while (bitBuff.hasByte())
 			{
@@ -78,8 +68,10 @@ public:
 		}
 
 		bitBuff.push(codes[3]);
+
 		if (bitBuff.hasByte()) // if it contains more than 1 byte, pop twice
 			outStream << bitBuff.pop();
+
 		outStream << bitBuff.pop(); // if it contains less than a byte, pop once
 
 		inpStream.close();
@@ -96,20 +88,21 @@ public:
 	{
 		std::string str = "";
 
-		ifstream inpStream(encodedFile, ios::binary | ios::in);
+		std::ifstream inpStream(encodedFile);
+		if (!inpStream)
+			exit(1);
+
+		bool firstLine = 1;
 		char c;
+
 		while (inpStream.get(c))
 		{
 			for (int i = 7; i >= 0; i--)
 			{
-				if (!((c >> i) & 1))
-				{
-					str += '0';
-				}
-				else
-				{
+				if (((c >> i) & 1))
 					str += '1';
-				}
+				else
+					str += '0';
 			}
 		}
 
