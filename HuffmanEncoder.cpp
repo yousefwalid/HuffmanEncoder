@@ -1,4 +1,5 @@
 #include <queue>
+#include <stack>
 #include <map>
 #include <string>
 #include "HuffmanTree.cpp"
@@ -7,6 +8,46 @@ class HuffmanEncoder
 {
 private:
 	std::map<char, std::string> codes;
+
+	void iterativeHuffmanCode(HuffmanTree *node)
+	{
+		std::string code = "0";
+		std::stack<HuffmanTree *> parentNodes;
+		std::map<HuffmanTree *, bool> visitedNode;
+
+		HuffmanTree *currentNode = node;
+		parentNodes.push(node);
+
+		while (!parentNodes.empty())
+		{
+			visitedNode[currentNode] = true;
+
+			if (currentNode->left != nullptr && !visitedNode.count(currentNode->left))
+			{
+				parentNodes.push(currentNode);
+				currentNode = currentNode->left;
+				code += "1";
+				continue;
+			}
+
+			if (currentNode->right != nullptr && !visitedNode.count(currentNode->right))
+			{
+				parentNodes.push(currentNode);
+				currentNode = currentNode->right;
+				code += "0";
+				continue;
+			}
+
+			if (currentNode->symbol != 0)
+			{
+				codes[node->symbol] = code;
+			}
+
+			code.pop_back();
+			parentNodes.pop();
+			currentNode = parentNodes.top();
+		}
+	}
 
 	void
 	recurseHuffmanCode(HuffmanTree *node, std::string code = "0")
@@ -37,7 +78,6 @@ public:
 
 		// 1) Push all alphabet in priority queue
 
-		
 		std::priority_queue<HuffmanTree, std::vector<HuffmanTree>, PriorityQueueComparator> Nodes;
 
 		for (auto letter : frequency)
@@ -72,7 +112,9 @@ public:
 
 		// 3) Get the codes
 
-		recurseHuffmanCode(&headNode);
+		//recurseHuffmanCode(&headNode);
+
+		iterativeHuffmanCode(&headNode);
 
 		// 4) Output the encoded file
 	}
