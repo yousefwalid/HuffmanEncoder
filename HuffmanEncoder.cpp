@@ -24,27 +24,29 @@ private:
 
 			if (currentNode->left != nullptr && !visitedNode.count(currentNode->left))
 			{
-				parentNodes.push(currentNode);
 				currentNode = currentNode->left;
+				parentNodes.push(currentNode);
 				code += "1";
 				continue;
 			}
 
 			if (currentNode->right != nullptr && !visitedNode.count(currentNode->right))
 			{
-				parentNodes.push(currentNode);
 				currentNode = currentNode->right;
+				parentNodes.push(currentNode);
 				code += "0";
 				continue;
 			}
 
 			if (currentNode->symbol != 0)
 			{
-				codes[node->symbol] = code;
+				codes[currentNode->symbol] = code;
 			}
 
 			code.pop_back();
 			parentNodes.pop();
+			if (parentNodes.empty())
+				break;
 			currentNode = parentNodes.top();
 		}
 	}
