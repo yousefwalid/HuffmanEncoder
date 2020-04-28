@@ -1,6 +1,6 @@
 #include "AppManager.cpp"
 #include <iostream>
-#include <string> 
+#include <string>
 
 int main()
 {
@@ -9,6 +9,5 @@ int main()
 	std::cin >> fileName;
 
 	AppManager app;
-	//app.run(fileName, "bin_" + fileName, fileName + ".out");
-	app.run((fileName+".in").c_str(), (fileName+".bin").c_str(), (fileName+".out").c_str());
+	app.run((fileName + ".in").c_str(), (fileName + ".bin").c_str(), (fileName + ".out").c_str());
 }
