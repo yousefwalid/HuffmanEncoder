@@ -1,24 +1,23 @@
 #include <fstream>
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <sstream>
 #include "BitBuffer.cpp"
-using namespace std;
 
 class FileManager
 {
 public:
-	std::map<char, int> readASCIIFile(const char *inputFile)
+	std::unordered_map<char, int> readASCIIFile(const char *inputFile)
 	{
 		std::ifstream inpStream;
-		inpStream.open(inputFile);
+		inpStream.open(inputFile, std::ios::binary);
 
 		if (!inpStream)
 			exit(1);
 
 		std::string line;
-		std::map<char, int> frequency;
+		std::unordered_map<char, int> frequency;
 
 		bool firstLine = 1;
 
@@ -43,17 +42,22 @@ public:
 		return frequency;
 	}
 
-	void encodeASCIIFile(const char *inputFile, std::map<char, std::string> codes, const char *outputFile)
+	void encodeASCIIFile(const char *inputFile, std::unordered_map<char, std::string> codes, const char *outputFile, const int &extraBits)
 	{
 		BitBuffer bitBuff;
 
-		std::ifstream inpStream(inputFile);
+		std::ifstream inpStream(inputFile, std::ios::binary);
 		if (!inpStream)
 			exit(1);
 
-		std::ofstream outStream(outputFile);
+		std::ofstream outStream(outputFile, std::ios::binary);
 		if (!outStream)
 			exit(1);
+
+		for (int i = 0; i < 3; i++)
+		{
+			bitBuff.push(((extraBits >> (2 - i)) & 1) + '0');
+		}
 
 		char c;
 		while (inpStream.get(c))
@@ -67,8 +71,6 @@ public:
 			}
 		}
 
-		bitBuff.push(codes[6]);
-
 		if (bitBuff.hasByte()) // if it contains more than 1 byte, pop twice
 			outStream << bitBuff.pop();
 
@@ -80,7 +82,7 @@ public:
 
 	void decodeFile(std::string decodedStr, const char *decodedFile)
 	{
-		std::ofstream file(decodedFile);
+		std::ofstream file(decodedFile, std::ios::binary);
 		file << decodedStr;
 	}
 
@@ -88,23 +90,35 @@ public:
 	{
 		std::string str = "";
 
-		std::ifstream inpStream(encodedFile);
+		std::ifstream inpStream(encodedFile, std::ios::binary);
 		if (!inpStream)
 			exit(1);
 
 		bool firstLine = 1;
 		char c;
 
+		int paddingLength = 0;
+		int paddingNum = 3;
 		while (inpStream.get(c))
 		{
 			for (int i = 7; i >= 0; i--)
 			{
+				if (paddingNum)
+				{
+					paddingLength <<= 1;
+					paddingLength += ((c >> i) & 1);
+					paddingNum--;
+					continue;
+				}
+
 				if (((c >> i) & 1))
 					str += '1';
 				else
 					str += '0';
 			}
 		}
+
+		str.erase(str.end() - paddingLength, str.end());
 
 		inpStream.close();
 		return str;

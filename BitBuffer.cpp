@@ -23,6 +23,11 @@ public:
     return buffer.size() / 8;
   }
 
+  int numOfBits()
+  {
+    return buffer.size();
+  }
+
   uint8_t pop() // Pops a single byte from the buffer
   {
     uint8_t Byte = 0;

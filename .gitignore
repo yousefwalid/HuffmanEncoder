@@ -1,2 +1,4 @@
 .vscode/
-*.exe
+testsample.bin
+testsample.in
+testsample.out

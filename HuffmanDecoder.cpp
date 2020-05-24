@@ -1,4 +1,4 @@
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <iostream>
 class HuffmanDecoder
@@ -7,13 +7,13 @@ private:
 	std::string decodedStr = "";
 
 public:
-	HuffmanDecoder(std::map<char, std::string> codeDic, std::string encodedStr)
+	HuffmanDecoder(std::unordered_map<char, std::string> codeDic, std::string encodedStr)
 	{
 		// 1) Inverse the dictionary
 
-		std::map<std::string, char> codeDicInv;
+		std::unordered_map<std::string, char> codeDicInv;
 
-		for (std::map<char, std::string>::iterator i = codeDic.begin(); i != codeDic.end(); ++i)
+		for (std::unordered_map<char, std::string>::iterator i = codeDic.begin(); i != codeDic.end(); ++i)
 			codeDicInv[i->second] = i->first;
 
 		// 2) Search for the value and add it or the decoded string
@@ -26,8 +26,6 @@ public:
 
 			if (codeDicInv.count(keySearch))
 			{
-				if (codeDicInv[keySearch] == 6)
-					break;
 				decodedStr += codeDicInv[keySearch];
 				keySearch = "";
 			}

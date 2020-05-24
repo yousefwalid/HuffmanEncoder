@@ -1,7 +1,7 @@
 #include "HuffmanDecoder.cpp"
 #include "FileManager.cpp"
 #include "HuffmanEncoder.cpp"
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <iostream>
 #include <fstream>
@@ -23,16 +23,12 @@ public:
 	{
 		// Get frequencies of characters from file
 
-		std::map<char, int> frequency = fileMan.readASCIIFile(inputFile);
-
-		// Add null character EOT to dictionary to identify end of file
-
-		frequency[6]++; // Enter EOT character
+		std::unordered_map<char, int> frequency = fileMan.readASCIIFile(inputFile);
 
 		// Get character codes
 
 		HuffmanEncoder Encoder(frequency);
-		std::map<char, std::string> codes = Encoder.getCodes();
+		std::unordered_map<char, std::string> codes = Encoder.getCodes();
 
 		// Print the codes to console
 
@@ -41,9 +37,22 @@ public:
 			std::cout << x.first << ":" << x.second << std::endl;
 		}
 
+		// handle extra padding bits
+
+		long long extraNumberOfBits = 0;
+
+		for (auto &x : codes)
+		{
+			extraNumberOfBits = (extraNumberOfBits % 8 + (frequency[x.first] % 8 * x.second.length() % 8) % 8) % 8;
+		}
+
+		extraNumberOfBits = (extraNumberOfBits + 3) % 8;
+
+		extraNumberOfBits = (8 - extraNumberOfBits) % 8;
+
 		// Encode the file
 
-		fileMan.encodeASCIIFile(inputFile, codes, outputFile);
+		fileMan.encodeASCIIFile(inputFile, codes, outputFile, extraNumberOfBits);
 
 		// Calculate statistics
 

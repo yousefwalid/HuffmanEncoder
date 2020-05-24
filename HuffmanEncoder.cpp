@@ -1,19 +1,19 @@
 #include <queue>
 #include <stack>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include "HuffmanTree.cpp"
 
 class HuffmanEncoder
 {
 private:
-	std::map<char, std::string> codes;
+	std::unordered_map<char, std::string> codes;
 
 	void iterativeHuffmanCode(HuffmanTree *node)
 	{
 		std::string code = "0";
 		std::stack<HuffmanTree *> parentNodes;
-		std::map<HuffmanTree *, bool> visitedNode;
+		std::unordered_map<HuffmanTree *, bool> visitedNode;
 
 		HuffmanTree *currentNode = node;
 		parentNodes.push(node);
@@ -75,7 +75,7 @@ private:
 	};
 
 public:
-	HuffmanEncoder(const std::map<char, int> &frequency)
+	HuffmanEncoder(const std::unordered_map<char, int> &frequency)
 	{
 
 		// 1) Push all alphabet in priority queue
@@ -121,5 +121,5 @@ public:
 		// 4) Output the encoded file
 	}
 
-	std::map<char, std::string> getCodes() { return codes; }
+	std::unordered_map<char, std::string> getCodes() { return codes; }
 };
