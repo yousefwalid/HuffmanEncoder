@@ -33,18 +33,14 @@ public:
 		// Print the codes to console
 
 		for (auto &x : codes)
-		{
 			std::cout << x.first << ":" << x.second << std::endl;
-		}
 
 		// handle extra padding bits
 
 		long long extraNumberOfBits = 0;
 
 		for (auto &x : codes)
-		{
 			extraNumberOfBits = (extraNumberOfBits % 8 + (frequency[x.first] % 8 * x.second.length() % 8) % 8) % 8;
-		}
 
 		extraNumberOfBits = (extraNumberOfBits + 3) % 8;
 

@@ -9,5 +9,5 @@ int main()
 	std::cin >> fileName;
 
 	AppManager app;
-	app.run(("./bin/" + fileName + ".in").c_str(), ("./bin/" + fileName + ".bin").c_str(), ("./bin/" + fileName + ".out").c_str());
+	app.run((fileName + ".in").c_str(), (fileName + ".bin").c_str(), (fileName + ".out").c_str());
 }

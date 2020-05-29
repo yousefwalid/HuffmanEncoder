@@ -82,11 +82,8 @@ public:
 
 		for (auto letter : frequency)
 		{
-			if (letter.second != 0)
-			{
-				HuffmanTree node((char)letter.first, letter.second);
-				Nodes.push(node);
-			}
+			HuffmanTree node((char)letter.first, letter.second);
+			Nodes.push(node);
 		}
 
 		// 2) Pop two letters, merge them together, then push them back into PQ
@@ -115,8 +112,6 @@ public:
 		//recurseHuffmanCode(&headNode);
 
 		iterativeHuffmanCode(&headNode);
-
-		// 4) Output the encoded file
 	}
 
 	std::unordered_map<char, std::string> getCodes() { return codes; }

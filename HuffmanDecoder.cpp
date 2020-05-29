@@ -18,7 +18,6 @@ public:
 
 		// 2) Search for the value and add it or the decoded string
 
-		char decodedLtr = 0;
 		std::string keySearch = "";
 		for (int i = 0; i < encodedStr.size(); i++)
 		{
