@@ -11,7 +11,7 @@ private:
 
 	void iterativeHuffmanCode(HuffmanTree *node)
 	{
-		std::string code = "0";
+		std::string code = "";
 		std::stack<HuffmanTree *> parentNodes;
 		std::unordered_map<HuffmanTree *, bool> visitedNode;
 
